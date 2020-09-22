@@ -56,9 +56,10 @@
                               </TableView>
                            </children>
                         </VBox>
-                        <Button fx:id="diagnoseButton" layoutX="54.0" layoutY="75.0" mnemonicParsing="false" onAction="#setDiagnosis" text="Diagnose" />
-                        <TextField fx:id="drugName" layoutX="16.0" layoutY="33.0" text="Drug" />
-                        <Button layoutX="32.0" layoutY="130.0" mnemonicParsing="false" onAction="#setAppointment" text="Set Appointment" />
+                        <Button fx:id="diagnoseButton" layoutX="52.0" layoutY="107.0" mnemonicParsing="false" onAction="#setDiagnosis" text="Diagnose" />
+                        <TextField fx:id="drugName" layoutX="16.0" layoutY="33.0" promptText="Drug" />
+                        <Button layoutX="32.0" layoutY="144.0" mnemonicParsing="false" onAction="#setAppointment" text="Set Appointment" />
+                        <TextField fx:id="condition_patient" layoutX="16.0" layoutY="71.0" promptText="Condition" />
                      </children></AnchorPane>
                     </content>
                 </Tab>

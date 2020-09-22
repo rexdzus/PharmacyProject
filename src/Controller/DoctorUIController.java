@@ -7,6 +7,7 @@ import Connect.ConnectionClass;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,6 +56,7 @@ public class DoctorUIController implements Initializable {
     public TableColumn usernamecol;
     public TableColumn severitycol;
     public TableColumn commentscol;
+    public TextField condition_patient;
 
 
     public DoctorUIController() throws SQLException {}
@@ -103,7 +105,6 @@ public class DoctorUIController implements Initializable {
             String severity = st.getString("severity");
             String comments = st.getString("comments");
             String myDoctor = st.getString("myDoctor");
-            System.out.println(userName);
             IssuesList patL = new IssuesList(userName,severity,comments,myDoctor);
             listIssues.add(patL);
 
@@ -142,7 +143,6 @@ public class DoctorUIController implements Initializable {
             String firstname = st.getString("firstname");
             String lastname = st.getString("lastname");
             String myDoctor = st.getString("myDoctor");
-            System.out.println(firstname);
             Patient pat = new Patient(username,password,firstname,lastname,myDoctor);
             list.add(pat);
 
@@ -171,6 +171,19 @@ public class DoctorUIController implements Initializable {
     }
 
     public void setDiagnosis(ActionEvent actionEvent) {
+        //select patient, type drug in dialog box, then send to new table to patients
+        //on hitting diagnose button, the patient is removed from the issues list
+        IssuesList selected = Issues.getSelectionModel().getSelectedItem();
+        System.out.println("Selected p_id: "+selected.getP_id());
+
+        ObservableList<IssuesList> selectedItems = IssuesList.getSelectedItems();
+
+        selectedItems.addListener(new ListChangeListener<IssuesList>() {
+            @Override
+            public void onChanged(Change<? extends Issues> IssuesList) {
+                System.out.println("Selection changed: " + IssuesList.getList());
+            }
+        })
     }
 
     public void setAppointment(ActionEvent actionEvent) {
