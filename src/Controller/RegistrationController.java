@@ -67,18 +67,20 @@ public class RegistrationController implements Initializable {
         System.out.println(getFirstName());
         System.out.println(getLastName());
 
-        ConnectionClass connectionClass = new ConnectionClass();
-        Connection connection = connectionClass.getConnection();
 
         if (buttonReader() == 0) {
-
+            ConnectionClass connectionClass = new ConnectionClass();
+            Connection connection = connectionClass.getConnection();
             Statement testuser = connection.createStatement();
-            String test1 = "insert into patients (userName, password, firstname, lastname, myDoctor) Values ('"
-                    + getUsername() + "', '" + getPassword() + "', '" + getFirstName() + "', '" + getLastName() + "', 'noDoc');";
+            String test1 = "insert into patients (username, password, firstname, lastname, mydoctor, condition) Values ('"
+                    + getUsername() + "', '" + getPassword() + "', '" + getFirstName() + "', '" + getLastName() + "', 'noDoc','');";
+            System.out.println(test1);
             testuser.executeUpdate(test1);
             connection.close();
-            System.out.println(buttonReader());
+            System.out.println("done");
         } else if (buttonReader() == 1){
+            ConnectionClass connectionClass = new ConnectionClass();
+            Connection connection = connectionClass.getConnection();
             Statement testuser = connection.createStatement();
             String test1 = "insert into doctors (userName, password, firstname, lastname) Values ('"
                     + getUsername() + "', '" + getPassword() + "', '" + getFirstName() + "', '" + getLastName() + "');";
@@ -86,9 +88,11 @@ public class RegistrationController implements Initializable {
             connection.close();
             System.out.println(buttonReader());
         } else {
+            ConnectionClass connectionClass = new ConnectionClass();
+            Connection connection = connectionClass.getConnection();
             Statement testuser = connection.createStatement();
-            String test1 = "insert into pharmacy (userName, password, firstname, lastname) Values ('"
-                    + getUsername() + "', '" + getPassword() + "', '" + getFirstName() + "', '" + getLastName() + "', '" + buttonReader() + "');";
+            String test1 = "insert into pharmacy (username, password, firstname, lastname) Values ('"
+                    + getUsername() + "', '" + getPassword() + "', '" + getFirstName() + "', '" + getLastName() + "');";
             testuser.executeUpdate(test1);
             connection.close();
             System.out.println(buttonReader());

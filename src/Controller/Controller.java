@@ -21,6 +21,8 @@ public class Controller {
     //public TextField text_entered;
     public TextField username;
     public TextField password;
+    private Object SQLException;
+    private Object IOException;
 
     public String getUsername() {
         return username.getText();
@@ -42,14 +44,12 @@ public class Controller {
 
     public void login(ActionEvent actionEvent) throws IOException {
 
-       // User user = new User("user","pass", "rex","yei",0);
-
         try{
             ConnectionClass connectionClass = new ConnectionClass();
             Connection connection = connectionClass.getConnection();
 
             Statement statement = connection.createStatement();
-            String sqlLogin = "Select * from patients where userName = '"+getUsername()+"' AND password = '"+getPassword()+"';";
+            String sqlLogin = "Select * from patients where patients.username = '"+getUsername()+"' AND password = '"+getPassword()+"';";
             ResultSet resultPatients = statement.executeQuery(sqlLogin);
 
             if (resultPatients.next()) {
@@ -61,21 +61,36 @@ public class Controller {
                 setStage.setScene(patientScene);
                 setStage.show();
             } else {
+                ConnectionClass ConnectionClass = new ConnectionClass();
+                Connection pharmConnection = ConnectionClass.getConnection();
 
-            }
+                Statement conn = pharmConnection.createStatement();
+                String pharmSqlLogin = "Select * from pharmacy where pharmacy.username = '" + getUsername() + "' AND password = '" + getPassword() + "';";
+                ResultSet pharmResultPatients = conn.executeQuery(pharmSqlLogin);
+                if (pharmResultPatients.next()) {
+                    String thisUser = getUsername();
+                    PatientUIController.beta = thisUser;
+                    Parent patientPage = FXMLLoader.load(getClass().getResource("../FXML/pharmacyUI.fxml"));
+                    Scene patientScene = new Scene(patientPage);
+                    Stage setStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    setStage.setScene(patientScene);
+                    setStage.show();
+                } else {
+                    System.out.println("Login Failed");
+                }}
 
         } catch (SQLException | IOException e){
             e.printStackTrace();
         }
-    }
 
+}
     public void loginDr(ActionEvent actionEvent) throws SQLException, IOException {
         try {
             ConnectionClass connectionClass = new ConnectionClass();
             Connection connection = connectionClass.getConnection();
 
             Statement statement1 = connection.createStatement();
-            String sqlLoginDr = "Select * from doctors where userName = '" + getUsername() + "' AND password = '" + getPassword() + "';";
+            String sqlLoginDr = "Select * from doctors where doctors.userName = '" + getUsername() + "' AND password = '" + getPassword() + "';";
             ResultSet resultDrs = statement1.executeQuery(sqlLoginDr);
             if (resultDrs.next()) {
                 String thisUser = getUsername();
@@ -87,8 +102,7 @@ public class Controller {
                 setStage.show();
             } else {
             }
-           } catch (SQLException | IOException e){
-        e.printStackTrace();
-    }
-     }
-}
+        } catch (SQLException | IOException e){
+            e.printStackTrace();
+        }
+}}

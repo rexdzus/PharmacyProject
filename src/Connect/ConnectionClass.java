@@ -15,19 +15,18 @@ public class ConnectionClass {
     public Connection connection;
     public Connection getConnection() {
         String dbName = "users";
-        String userName = "root";
-        String password = "";
+        String userName = "postgres";
+        String password = "pass";
 
+        
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Class.forName("org.postgresql.Driver");
 
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/" + dbName, userName, password);
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost/" + dbName, userName, password);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return connection;
     }
-
-
 }
